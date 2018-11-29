@@ -1,0 +1,97 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<!------ Include the above in your HEAD tag ---------->
+<% current_user.cart.cart_items.each do |cart_item| %>
+    <div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Total</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-sm-8 col-md-6">
+                        <div class="media">
+                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="<%= cart_item.item.image_url %>" style="width: 72px; height: 72px;"> </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="#"><%= cart_item.item.title %></a></h4>
+                                <h5 class="media-heading"> by <a href="#"><%= current_user.name %></a></h5>
+                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>                            </div>
+                        </div></td>
+                        <td class="col-sm-1 col-md-1" style="text-align: center">
+                         x <%= cart_item.quantity %>
+                        </td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong><span class="badge badge-info"><%= number_to_currency(current_user.cart.total_price, unit: "€", separator: ",", format: "%n %u") %></strong></td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong><span class="badge badge-info"><%= number_to_currency(current_user.cart.total_price, unit: "€", separator: ",", format: "%n %u") %></strong></td>
+                        <td class="col-sm-1 col-md-1">
+                        <button type="button" class="btn btn-danger">
+                        <%= link_to "Remove", cart_item_path(:id => cart_item), :method=>:delete, :remote => true %>
+                        </button></td>
+                        
+                    </tr>
+<% end %>
+                    <tr>
+                        
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Subtotal</h5></td>
+                        <td class="text-right"><h5><strong>
+                        <p class="font-weight-bold"><span class="badge badge-info"><%= number_to_currency(current_user.cart.total_price, unit: "€", separator: ",", format: "%n %u") %></span></p>
+                        </strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h3>Total</h3></td>
+                        <td class="text-right"><h3><strong><p class="font-weight-bold"><span class="badge badge-info"><%= number_to_currency(current_user.cart.total_price, unit: "€", separator: ",", format: "%n %u") %></span></p>                        </strong></h3></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>
+                        
+                        <button, type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                        </button></td>
+                        <td>
+                        <%= form_tag charges_path do %>
+                            <article>
+                              <% if flash[:error].present? %>
+                                <div id="error_explanation">
+                                  <p><%= flash[:error] %></p>
+                                </div>
+                              <% end %>
+                             
+                            </article>
+                          
+                            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                                    data-amount="<%=current_user.cart.total_price%>"
+                                    data-locale="auto">
+                                     </script>
+                          <% end %>
+                          </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

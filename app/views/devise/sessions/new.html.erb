@@ -1,0 +1,73 @@
+<div class="login-wrap">
+	<div class="login-html">
+		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+    <div class="login-form">
+    
+      <div class="sign-in-htm">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+				<div class="group">
+        <%= f.label :name, class: "label" %><br />
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "input" %>
+				</div>
+				<div class="group">
+				<%= f.label :email, class: "label" %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
+				</div>
+				<div class="group">
+        <%= f.label :password, class: "label" %><br />
+        <%= f.password_field :password, autocomplete: "current-password", class: "input" %>
+        </div>
+        <% if devise_mapping.rememberable? -%>
+        <div class="group">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </div>
+      <% end -%>
+				<div class="group">
+        <%= f.submit "Log in", class: "button" %>
+        </div>
+        <% end %>
+          <%= render "devise/shared/links" %>
+				<div class="hr"></div>
+				<div class="foot-lnk">
+					<a href="#forgot">Forgot Password?</a>
+				</div>
+      </div>
+      
+      <div class="sign-up-htm">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages! %>
+				<div class="group">
+        <%= f.label :name, class: "label" %><br />
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "input" %>
+				</div>
+				<div class="group">
+				<%= f.label :email, class: "label" %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
+				</div>
+				<div class="group">
+        <%= f.label :password, class: "label" %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "new-password", class: "input" %>
+				</div>
+				<div class="group">
+        <%= f.label :password_confirmation, class: "label" %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input" %>
+				</div>
+        <div class="group">
+        <%= f.submit "Sign up", class: "button" %>
+        </div>
+        <% end %>
+
+      <%= render "devise/shared/links" %>
+				<div class="hr"></div>
+				<div class="foot-lnk">
+					<label for="tab-1">Already Member?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
